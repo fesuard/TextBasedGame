@@ -1,5 +1,7 @@
 from game.player import Mage, Warrior
-
+from game.enemy import Goblin
+from game.battle import Battle
+from game.story import Story
 
 class GameStart:
     def __init__(self):
