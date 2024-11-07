@@ -63,18 +63,18 @@ class Mage(Player):
 
 
         if self.level == 3:
-            self.stats['hp'] += self.stats['hp'] + (self.stats['hp'] * 0.15)
-            self.stats['damage'] += self.stats['damage'] + (self.stats['hp'] * 0.10)
+            self.stats['hp'] += self.stats['hp'] * 0.15
+            self.stats['damage'] += self.stats['hp'] * 0.10
             firebolt = Firebolt()
             self.abilities.append(firebolt)
 
         if self.level == 4:
-            self.stats['hp'] += self.stats['hp'] + (self.stats['hp'] * 0.15)
-            self.stats['damage'] += self.stats['damage'] + (self.stats['hp'] * 0.10)
+            self.stats['hp'] +=self.stats['hp'] * 0.15
+            self.stats['damage'] += self.stats['damage'] * 0.10
 
         if self.level == 5:
-            self.stats['hp'] += self.stats['hp'] + (self.stats['hp'] * 0.15)
-            self.stats['damage'] += self.stats['damage'] + (self.stats['hp'] * 0.10)
+            self.stats['hp'] += self.stats['hp'] * 0.15
+            self.stats['damage'] += self.stats['hp'] * 0.10
             meteor = Meteor()
             self.abilities.append(meteor)
 
@@ -98,7 +98,6 @@ class Mage(Player):
                 self.current_mana = self.stats['max_mana']
             else:
                 self.current_mana += item.value
-
 
     def death(self):
         print(self.stats['death_scream'])

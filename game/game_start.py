@@ -20,9 +20,9 @@ class GameStart:
             self.player = Warrior(name)
 
     def start_game(self):
-        self.story().chapter_0()
+        self.story.chapter_0()
         self.choose_class()
         if self.player:
-            self.story().chapter_1()
+            self.story.chapter_1()
             battle = Battle(self.player, Goblin())
             battle.start()
