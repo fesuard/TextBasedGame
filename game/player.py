@@ -61,7 +61,6 @@ class Mage(Player):
             self.stats['damage'] += self.stats['damage'] * 0.10
             self.stats['max_xp'] += self.stats['max_xp'] * 0.20
 
-
         if self.level == 3:
             self.stats['hp'] += self.stats['hp'] * 0.15
             self.stats['damage'] += self.stats['hp'] * 0.10
@@ -101,6 +100,10 @@ class Mage(Player):
 
     def death(self):
         print(self.stats['death_scream'])
+
+
+class Warrior:
+    pass
 
 
 

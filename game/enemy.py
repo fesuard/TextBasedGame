@@ -6,7 +6,7 @@ class Enemy(ABC):
     def __init__(self, name, health, abilities):
         self.name = name
         self.health = health
-        self.abilities = abilities
+        self.abilities = []
 
 
 class Goblin(Enemy):
@@ -14,3 +14,8 @@ class Goblin(Enemy):
         super().__init__('Goblin', 50, [])
         normal_attack, slash, maim = GoblinAttack(), Slash(), Maim()
         self.abilities.extend([normal_attack, slash, maim])
+
+
+    def attack(self):
+        if self.abilities[0].amount:
+            return self.abilities[0].amount

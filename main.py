@@ -1,10 +1,6 @@
-
-
-
-
-
+from game.game_start import GameStart
 
 
 if __name__ == '__main__':
     game = GameStart()
-    game.start.game()
+    game.start_game()
