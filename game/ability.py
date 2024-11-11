@@ -8,6 +8,10 @@ class Ability(ABC):
         self.type = 'damage'
         self.amount = 0
 
+    @abstractmethod
+    def __str__(self):
+        pass
+
 
 class MageAttack(Ability):
     def __init__(self):
@@ -16,6 +20,9 @@ class MageAttack(Ability):
 
     def level_up(self):
         self.amount += self.amount * 0.15
+
+    def __str__(self):
+        return "Basic Attack"
 
 
 class Frostbolt(Ability):
@@ -28,6 +35,9 @@ class Frostbolt(Ability):
     def level_up(self):
         self.amount += self.amount * 0.15
 
+    def __str__(self):
+        return "Frostbolt"
+
 
 class Firebolt(Ability):
     def __init__(self):
@@ -38,6 +48,9 @@ class Firebolt(Ability):
 
     def level_up(self):
         self.amount += self.amount * 0.15
+
+    def __str__(self):
+        return "Firebolt"
 
 
 class Meteor(Ability):
@@ -50,6 +63,9 @@ class Meteor(Ability):
     def level_up(self):
         pass
 
+    def __str__(self):
+        return "Meteor"
+
 
 class GoblinAttack(Ability):
     def __init__(self):
@@ -57,6 +73,9 @@ class GoblinAttack(Ability):
         self.total_cd = 0
         self.current_cd = 0
         self.amount = 2
+
+    def __str__(self):
+        return "Basic Attack"
 
 
 class Slash(Ability):
@@ -66,6 +85,9 @@ class Slash(Ability):
         self.current_cd = 0
         self.amount = 3
 
+    def __str__(self):
+        return "Slash"
+
 
 class Maim(Ability):
     def __init__(self):
@@ -73,3 +95,6 @@ class Maim(Ability):
         self.total_cd = 5
         self.current_cd = 0
         self.amount = 5
+
+    def __str__(self):
+        return "Maim"

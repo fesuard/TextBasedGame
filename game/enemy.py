@@ -3,9 +3,9 @@ from game.ability import GoblinAttack, Slash, Maim
 
 
 class Enemy(ABC):
-    def __init__(self, name, health, abilities):
+    def __init__(self, name, current_hp, abilities):
         self.name = name
-        self.health = health
+        self.current_hp = current_hp
         self.abilities = []
 
 

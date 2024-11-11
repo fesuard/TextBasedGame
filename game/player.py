@@ -29,6 +29,10 @@ class Player(ABC):
         pass
 
     @abstractmethod
+    def show_abilities(self):
+        pass
+
+    @abstractmethod
     def use_damage_item(self, item):
         pass
 
@@ -80,6 +84,12 @@ class Mage(Player):
     def use_ability(self, ability):
         if ability.effect is None:
             return ability.damage
+
+    def show_abilities(self):
+        abilities = []
+        for i in range(len(self.abilities)):
+            abilities.append(f'{i+1}. {self.abilities[i]}')
+        return '\n'.join(abilities)
 
     def use_damage_item(self, item):
         return item.damage
