@@ -20,9 +20,12 @@ class Battle:
     def start(self):
         print('THE BATTLE HAS STARTED !')
         print(f'{self.enemy} {self.show_hp_bar(25, self.enemy.total_hp, self.enemy.current_hp)}')
+        print('\n\n')
+        print(f'Your HP {self.show_hp_bar(25, self.player.stats['max_hp'], self.player.current_hp)}')
         while self.player.current_hp > 0 and self.enemy.current_hp > 0:
             print(self.menu)
 
+            # Player round:
             choice = int(input('> '))
             if choice in range(1, len(self.player.abilities) + 1):
                 if choice == 1:
@@ -31,8 +34,15 @@ class Battle:
 
             if self.enemy.current_hp > 0:
                 print(f'{self.enemy} {self.show_hp_bar(25, self.enemy.total_hp, self.enemy.current_hp)}')
+                print('\n\n')
             else:
                 print(f'Congrats, you have slain the {self.enemy}')
 
+            # Enemy round:
+            self.player.current_hp -= self.enemy.get_ability().amount
+            self.enemy.get_ability().current_cd = self.enemy.get_ability().total_cd
+
+            if self.player.current_hp > 0:
+                print(f'Your HP {self.show_hp_bar(25, self.player.stats['max_hp'], self.player.current_hp)}')
 
 

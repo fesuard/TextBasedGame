@@ -22,9 +22,14 @@ class Goblin(Enemy):
         normal_attack, slash, maim = GoblinAttack(), Slash(), Maim()
         self.abilities.extend([normal_attack, slash, maim])
 
-    def attack(self):
-        if self.abilities[0].amount:
-            return self.abilities[0].amount
+    def get_ability(self):
+        if self.abilities[2].current_cd == 0:
+            return self.abilities[2]
+
+        if self.abilities[1].current_cd == 0:
+            return self.abilities[1]
+
+        return self.abilities[0]
 
     def __str__(self):
         return 'Fearsome Goblin'
