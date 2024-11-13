@@ -10,10 +10,14 @@ class Enemy(ABC):
         self.abilities = []
         self.xp_for_player = 0
 
+    @abstractmethod
+    def __str__(self):
+        pass
+
 
 class Goblin(Enemy):
     def __init__(self):
-        super().__init__('Goblin', 250)
+        super().__init__('goblin', 250)
         self.xp_for_player = 100
         normal_attack, slash, maim = GoblinAttack(), Slash(), Maim()
         self.abilities.extend([normal_attack, slash, maim])
@@ -21,3 +25,6 @@ class Goblin(Enemy):
     def attack(self):
         if self.abilities[0].amount:
             return self.abilities[0].amount
+
+    def __str__(self):
+        return 'Fearsome Goblin'
