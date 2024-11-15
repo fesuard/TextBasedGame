@@ -55,6 +55,7 @@ class Mage(Player):
         }
         self.current_hp = 80
         self.current_mana = 100
+        self.current_xp = 0
         normal_attack, frostbolt = MageAttack(), Frostbolt()
         self.abilities.extend([normal_attack, frostbolt])
 
@@ -80,6 +81,8 @@ class Mage(Player):
             self.stats['damage'] += self.stats['hp'] * 0.10
             meteor = Meteor()
             self.abilities.append(meteor)
+
+        self.current_xp = 0
 
     def use_ability(self, ability):
         if ability.effect is None:
