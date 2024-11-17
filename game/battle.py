@@ -59,14 +59,25 @@ class Battle:
             if self.player.current_hp > 0:
                 print(f'Your HP {self.show_hp_bar(25, self.player.stats['max_hp'], self.player.current_hp)}')
 
+        # handling losing scenario
+        if self.player.current_hp <= 0:
+            print(f"You've Lost to {self.enemy}")
+            input("Press any key to exit")
+
+
+
         # handling winning scenarios
         if self.enemy.current_hp <= 0:
             print(f'Congrats, you have slain the {self.enemy}\n')
+
             if self.enemy.xp_for_player + self.player.current_xp >= self.player.stats['max_xp']:
                 leftover_xp = self.enemy.xp_for_player + self.player.current_xp - self.player.stats['max_xp']
                 self.player.level_up()
                 self.player.current_xp += leftover_xp
                 print("YOU LEVELED UP")
+                print(self.player.stats)
+                print(self.player.current_xp, self.player.current_mana)
+
 
 
 

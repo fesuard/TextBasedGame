@@ -6,7 +6,7 @@ from game.story import Story
 class GameStart:
     def __init__(self):
         self.player = None
-        self.story = Story('assets/text/story.txt')
+        self.story = Story()
 
     def choose_class(self):
         print("Choose a class: 1) Mage 2) Warrior")
@@ -23,7 +23,6 @@ class GameStart:
             self.choose_class()
 
     def start_game(self):
-        self.story.load_story()
         self.story.get_chapter(0)
         self.choose_class()
         battle = Battle(self.player, Goblin())

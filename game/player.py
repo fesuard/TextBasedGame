@@ -67,22 +67,26 @@ class Mage(Player):
             self.stats['max_xp'] += self.stats['max_xp'] * 0.20
 
         if self.level == 3:
-            self.stats['hp'] += self.stats['hp'] * 0.15
-            self.stats['damage'] += self.stats['hp'] * 0.10
+            self.stats['max_hp'] += self.stats['max_hp'] * 0.15
+            self.stats['damage'] += self.stats['damage'] * 0.10
+            self.stats['max_xp'] += self.stats['max_xp'] * 0.20
             firebolt = Firebolt()
             self.abilities.append(firebolt)
 
         if self.level == 4:
-            self.stats['hp'] +=self.stats['hp'] * 0.15
+            self.stats['max_hp'] +=self.stats['max_hp'] * 0.15
             self.stats['damage'] += self.stats['damage'] * 0.10
+            self.stats['max_xp'] += self.stats['max_xp'] * 0.20
 
         if self.level == 5:
-            self.stats['hp'] += self.stats['hp'] * 0.15
-            self.stats['damage'] += self.stats['hp'] * 0.10
+            self.stats['max_hp'] += self.stats['max_hp'] * 0.15
+            self.stats['damage'] += self.stats['damage'] * 0.10
+            self.stats['max_xp'] += self.stats['max_xp'] * 0.20
             meteor = Meteor()
             self.abilities.append(meteor)
 
-        self.current_xp = 0
+        self.current_hp = self.stats['max_hp']
+        self.current_mana = self.stats['max_mana']
 
     def use_ability(self, ability):
         if ability.effect is None:
