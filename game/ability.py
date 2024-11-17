@@ -17,7 +17,6 @@ class MageAttack(Ability):
     def __init__(self):
         super().__init__()
         self.amount = 23
-        self.total_cd = None
 
     def level_up(self):
         self.amount += self.amount * 0.15
@@ -71,8 +70,6 @@ class Meteor(Ability):
 class GoblinAttack(Ability):
     def __init__(self):
         super().__init__()
-        self.total_cd = None
-        self.current_cd = 0
         self.amount = 2
 
     def __str__(self):

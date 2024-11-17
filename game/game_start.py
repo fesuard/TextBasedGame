@@ -25,5 +25,5 @@ class GameStart:
     def start_game(self):
         self.story.get_chapter(0)
         self.choose_class()
-        battle = Battle(self.player, Goblin())
-        battle.start()
+        battle1 = Battle(self.player, Goblin())
+        battle1.start()

@@ -61,6 +61,10 @@ class Mage(Player):
 
     def level_up(self):
         self.level += 1
+
+        for ability in self.abilities:
+            ability.level_up()
+
         if self.level == 2:
             self.stats['max_hp'] += self.stats['max_hp'] * 0.15
             self.stats['damage'] += self.stats['damage'] * 0.10
