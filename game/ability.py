@@ -92,7 +92,11 @@ class Maim(Ability):
         super().__init__()
         self.total_cd = 5
         self.current_cd = 0
-        self.amount = 5
+        self.amount = 7
+        self.type = 'dot'
+        self.dot_damage = 5
+        self.dot_duration = 5
+        self.total_dot_duration = 5
 
     def __str__(self):
         return "Maim"

@@ -9,6 +9,7 @@ class Battle:
                      f'{self.player.show_abilities()}')
         self.used_enemy_abilities = []
         self.used_player_abilities = []
+        self.enemy_dots = []
 
     def show_hp_bar(self, bar_length, total_hp, current_hp):
         hp_ratio = current_hp / total_hp
@@ -16,8 +17,6 @@ class Battle:
 
         bar = '#' * filled_length + '-' * (bar_length - filled_length)
         return f'[{bar}] {current_hp} / {total_hp} HP'
-
-
 
     def start(self):
         print('THE BATTLE HAS STARTED !')
@@ -63,8 +62,6 @@ class Battle:
                 except ValueError:
                     print("Invalid input, please input a number corresponding to one of your abilities.")
 
-
-
             if self.enemy.current_hp > 0:
                 print(f'{self.enemy} {self.show_hp_bar(25, self.enemy.total_hp, self.enemy.current_hp)}')
                 print('\n\n')
@@ -77,13 +74,25 @@ class Battle:
                             ability.current_cd -= 1
                             print(f' ENEMY ABILITY {ability} CD IS: {ability.current_cd}')
 
-            self.player.current_hp -= self.enemy.get_ability().amount
+            if self.enemy_dots:
+                for i in range(len(self.enemy_dots)):
+                    if self.enemy_dots[i].dot_duration > 0:
+                        self.enemy_dots[i].dot_duration -= 1
+                    self.player.current_hp -= self.enemy_dots[i].dot_damage
+                    print(f"You got hit with {self.enemy_dots[i].dot_damage} dot damage")
 
-            if self.enemy.get_ability() not in self.used_enemy_abilities:
-                self.used_enemy_abilities.append(self.enemy.get_ability())
+            enemy_ability = self.enemy.get_ability()
+            self.player.current_hp -= enemy_ability.amount
+            if enemy_ability.type == 'dot':
+                self.enemy_dots.append(enemy_ability)
 
-            print(f'GOBLIN USED {self.enemy.get_ability()}')
-            self.enemy.get_ability().current_cd = self.enemy.get_ability().total_cd
+            if enemy_ability not in self.used_enemy_abilities:
+                self.used_enemy_abilities.append(enemy_ability)
+
+            print(f'GOBLIN USED {enemy_ability} for {enemy_ability.amount} damage')
+            if enemy_ability.type == 'dot':
+                print(f"{self.enemy} applied a DOT on you")
+            enemy_ability.current_cd = enemy_ability.total_cd
 
             if self.player.current_hp > 0:
                 print(f'Your HP {self.show_hp_bar(25, self.player.stats['max_hp'], self.player.current_hp)}')
