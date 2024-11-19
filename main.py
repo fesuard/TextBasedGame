@@ -11,4 +11,4 @@ if __name__ == '__main__':
         print("An error has occurred:")
         print(e)
         traceback.print_exc()
-        input("Press Enter to exit...") # Prevents console for closing immediately
+        input("Press Enter to exit...") # Prevents console from closing immediately

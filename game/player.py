@@ -7,6 +7,15 @@ class Player(ABC):
         self.current_xp = 0
         self.level = 1
         self.abilities = []
+        self.inventory = []
+        self.gold = 0
+        self.equipment = {
+            'head': 'empty',
+            'chest': 'empty',
+            'legs': 'empty',
+            'hands': 'empty',
+            'weapon': 'empty'
+        }
         self.stats = {
             'max_hp': 0,
             'max_xp': 0,
