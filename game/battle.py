@@ -18,6 +18,10 @@ class Battle:
         bar = '#' * filled_length + '-' * (bar_length - filled_length)
         return f'[{bar}] {current_hp} / {total_hp} HP'
 
+    def use_damage_item(self, item):
+        if item.effect is None:
+            self.enemy.current_hp -= item.amount
+
     def start(self):
         print('THE BATTLE HAS STARTED !')
         print(f'{self.enemy} {self.show_hp_bar(25, self.enemy.total_hp, self.enemy.current_hp)}')
@@ -75,16 +79,17 @@ class Battle:
                             print(f' ENEMY ABILITY {ability} CD IS: {ability.current_cd}')
 
             if self.enemy_dots:
-                for i in range(len(self.enemy_dots)):
-                    if self.enemy_dots[i].dot_duration > 0:
-                        self.enemy_dots[i].dot_duration -= 1
-                    self.player.current_hp -= self.enemy_dots[i].dot_damage
-                    print(f"You got hit with {self.enemy_dots[i].dot_damage} dot damage")
+                for dot in self.enemy_dots:
+                    if dot.dot_duration > 0:
+                        dot.dot_duration -= 1
+                        self.player.current_hp -= dot.dot_damage
+                        print(f"You got hit with {dot.dot_damage} dot damage")
 
             enemy_ability = self.enemy.get_ability()
             self.player.current_hp -= enemy_ability.amount
             if enemy_ability.type == 'dot':
-                self.enemy_dots.append(enemy_ability)
+                if enemy_ability not in self.enemy_dots:
+                    self.enemy_dots.append(enemy_ability)
 
             if enemy_ability not in self.used_enemy_abilities:
                 self.used_enemy_abilities.append(enemy_ability)

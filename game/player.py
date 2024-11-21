@@ -101,26 +101,19 @@ class Mage(Player):
         self.current_hp = self.stats['max_hp']
         self.current_mana = self.stats['max_mana']
 
-    def use_ability(self, ability):
-        if ability.effect is None:
-            return ability.damage
-
     def show_abilities(self):
         abilities = []
         for i in range(len(self.abilities)):
             abilities.append(f'{i+1}. {self.abilities[i]}')
         return '\n'.join(abilities)
 
-    def use_damage_item(self, item):
-        return item.damage
-
     def use_buff_item(self, item):
 
         if item.increased_stat == 'hp':
-            if item.value + self.current_hp >= self.stats['max_hp']:
+            if item.amount + self.current_hp >= self.stats['max_hp']:
                 self.current_hp = self.stats['max_hp']
             else:
-                self.current_hp += item.value
+                self.current_hp += item.amount
 
         if item.increased_stat == 'mana':
             if item.value + self.current_mana >= self.stats['max_mana']:
