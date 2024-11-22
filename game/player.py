@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 from game.ability import MageAttack, Frostbolt, Firebolt, Meteor
+from game.item import Hppot, Grenade
+
 
 class Player(ABC):
     def __init__(self, name):
@@ -33,16 +35,9 @@ class Player(ABC):
     def level_up(self):
         pass
 
-    @abstractmethod
-    def use_ability(self, ability):
-        pass
 
     @abstractmethod
     def show_abilities(self):
-        pass
-
-    @abstractmethod
-    def use_damage_item(self, item):
         pass
 
     @abstractmethod
@@ -65,8 +60,11 @@ class Mage(Player):
         self.current_hp = 80
         self.current_mana = 100
         self.current_xp = 0
+        self.gold = 50
         normal_attack, frostbolt = MageAttack(), Frostbolt()
+        hp_pot, grenade = Hppot(), Grenade()
         self.abilities.extend([normal_attack, frostbolt])
+        self.inventory.extend([hp_pot, grenade])
 
     def level_up(self):
         self.level += 1

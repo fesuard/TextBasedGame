@@ -10,6 +10,7 @@ class Battle:
         self.used_enemy_abilities = []
         self.used_player_abilities = []
         self.enemy_dots = []
+        self.player_dots = []
 
     def show_hp_bar(self, bar_length, total_hp, current_hp):
         hp_ratio = current_hp / total_hp
@@ -19,8 +20,17 @@ class Battle:
         return f'[{bar}] {current_hp} / {total_hp} HP'
 
     def use_damage_item(self, item):
-        if item.effect is None:
-            self.enemy.current_hp -= item.amount
+        if item.effect:
+            if item not in self.player_dots:
+                self.player_dots.append(item)
+        self.enemy.current_hp -= item.amount
+
+    def use_support_item(self, item):
+        if str(item) == 'HpPot':
+            if self.player.current_hp + item.amount >= self.player.stats['hp']:
+                self.player.current_hp = self.player.stats['hp']
+            else:
+                self.player.current_hp += item.amount
 
     def start(self):
         print('THE BATTLE HAS STARTED !')
@@ -30,7 +40,9 @@ class Battle:
         while self.player.current_hp > 0 and self.enemy.current_hp > 0:
             print(self.menu)
 
-            # Player round
+            # Player round:
+
+            # Cooldown management
             if self.used_player_abilities:
                 for ability in self.used_player_abilities:
                     if ability.total_cd > 0:
@@ -40,6 +52,14 @@ class Battle:
                                 print(f'{ability} just went off cooldown')
                             else:
                                 print(f'PLAYER ABILITY {ability} CD IS: {ability.current_cd}')
+
+            # Player dot management
+            if self.player_dots:
+                for dot in self.player_dots:
+                    if dot.dot_duration > 0:
+                        dot.dot_duration -= 1
+                        self.enemy.current_hp -= dot.dot_damage
+                        print(f"You hit {self.enemy} with {dot.dot_damage} dot damage")
 
             valid_choice = False
             while not valid_choice:
@@ -71,6 +91,8 @@ class Battle:
                 print('\n\n')
 
             # Enemy round:
+
+            # Cooldown management
             if self.used_enemy_abilities:
                 for ability in self.used_enemy_abilities:
                     if ability.total_cd > 0:
@@ -78,6 +100,7 @@ class Battle:
                             ability.current_cd -= 1
                             print(f' ENEMY ABILITY {ability} CD IS: {ability.current_cd}')
 
+            # Enemy dot management
             if self.enemy_dots:
                 for dot in self.enemy_dots:
                     if dot.dot_duration > 0:
