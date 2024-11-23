@@ -41,6 +41,10 @@ class Player(ABC):
         pass
 
     @abstractmethod
+    def show_inventory(self):
+        pass
+
+    @abstractmethod
     def use_buff_item(self, item):
         pass
 
@@ -50,7 +54,7 @@ class Mage(Player):
         super().__init__(name)
         self.stats = {
             'max_hp': 80,
-            'max_mana': 100,
+            'max_mp': 100,
             'max_xp': 100,
             'damage': 23,
             'total_armor': 10,
@@ -104,6 +108,12 @@ class Mage(Player):
         for i in range(len(self.abilities)):
             abilities.append(f'{i+1}. {self.abilities[i]}')
         return '\n'.join(abilities)
+
+    def show_inventory(self):
+        items = ['To use an item press:']
+        for i in range(len(self.inventory)):
+            items.append(f'{i+1}. {self.inventory[i]} - {self.inventory[i].units} uses remaining')
+        return '\n'.join(items)
 
     def use_buff_item(self, item):
 

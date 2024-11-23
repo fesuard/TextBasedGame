@@ -6,18 +6,20 @@ class Battle:
         self.enemy = enemy
         self.menu = (f'    YOU ARE FIGHTING AGAINST THE FEARSOME {self.enemy}\n'
                      f'\n To use an ability press:\n'
-                     f'{self.player.show_abilities()}')
+                     f'{self.player.show_abilities()}\n'
+                     f'0. To go to your inventory\n')
+
         self.used_enemy_abilities = []
         self.used_player_abilities = []
         self.enemy_dots = []
         self.player_dots = []
 
-    def show_hp_bar(self, bar_length, total_hp, current_hp):
-        hp_ratio = current_hp / total_hp
+    def show_progress_bar(self, bar_length, total_stat, current_stat):
+        hp_ratio = current_stat / total_stat
         filled_length = int(bar_length * hp_ratio)
 
         bar = '#' * filled_length + '-' * (bar_length - filled_length)
-        return f'[{bar}] {current_hp} / {total_hp} HP'
+        return f'[{bar}] {current_stat} / {total_stat} HP'
 
     def use_damage_item(self, item):
         if item.effect:
@@ -34,9 +36,10 @@ class Battle:
 
     def start(self):
         print('THE BATTLE HAS STARTED !')
-        print(f'{self.enemy} {self.show_hp_bar(25, self.enemy.total_hp, self.enemy.current_hp)}')
+        print(f'{self.enemy} {self.show_progress_bar(25, self.enemy.total_hp, self.enemy.current_hp)}')
         print('\n\n')
-        print(f'Your HP {self.show_hp_bar(25, self.player.stats['max_hp'], self.player.current_hp)}')
+        print(f'Your HP {self.show_progress_bar(25, self.player.stats['max_hp'], self.player.current_hp)}')
+        print(f'Your MP {self.show_progress_bar(25, self.player.stats['max_mp'], self.player.current_mana)}')
         while self.player.current_hp > 0 and self.enemy.current_hp > 0:
             print(self.menu)
 
@@ -61,6 +64,7 @@ class Battle:
                         self.enemy.current_hp -= dot.dot_damage
                         print(f"You hit {self.enemy} with {dot.dot_damage} dot damage")
 
+            # Ability choice
             valid_choice = False
             while not valid_choice:
                 try:
@@ -74,11 +78,46 @@ class Battle:
                             print(f"Can't use {player_ability}\n"
                                   f"Remaining cooldown: {player_ability.current_cd}")
 
+                        elif player_ability.mana_cost > self.player.current_mana:
+                            print('Not enough mana')
+
                         else:
                             if player_ability.type == 'damage':
                                 self.enemy.current_hp -= player_ability.amount
+
                                 player_ability.current_cd = player_ability.total_cd
+
+                                if self.player.current_mana - player_ability.mana_cost > 0:
+                                    self.player.current_mana -= player_ability.mana_cost
+                                else:
+                                    self.player.current_mana = 0
+
                                 valid_choice = True
+
+                    # Inventory choice
+                    elif choice == 0:
+                        valid_choice1 = False
+                        while not valid_choice1:
+                            try:
+                                print(self.player.show_inventory())
+                                choice1 = int(input('> '))
+                                if choice1 in range(1, len(self.player.inventory) + 1):
+                                    player_item = self.player.inventory[choice - 1]
+                                    if player_item.units < 1:
+                                        print(f'You are out of uses for {player_item}')
+                                    else:
+                                        if player_item.type == 'damage':
+                                            self.use_damage_item(player_item)
+                                        elif player_item.type == 'support':
+                                            self.use_support_item(player_item)
+
+                                        player_item.units -= 1
+
+                                        valid_choice1 = True
+                                        valid_choice = True
+
+                            except ValueError:
+                                print("Invalid input, please input a number corresponding to one of your items.")
 
                     else:
                         print(f"No ability found with this input: {choice}, try again")
@@ -87,7 +126,7 @@ class Battle:
                     print("Invalid input, please input a number corresponding to one of your abilities.")
 
             if self.enemy.current_hp > 0:
-                print(f'{self.enemy} {self.show_hp_bar(25, self.enemy.total_hp, self.enemy.current_hp)}')
+                print(f'{self.enemy} {self.show_progress_bar(25, self.enemy.total_hp, self.enemy.current_hp)}')
                 print('\n\n')
 
             # Enemy round:
@@ -123,7 +162,8 @@ class Battle:
             enemy_ability.current_cd = enemy_ability.total_cd
 
             if self.player.current_hp > 0:
-                print(f'Your HP {self.show_hp_bar(25, self.player.stats['max_hp'], self.player.current_hp)}')
+                print(f'Your HP {self.show_progress_bar(25, self.player.stats['max_hp'], self.player.current_hp)}')
+                print(f'Your MP {self.show_progress_bar(25, self.player.stats['max_mp'], self.player.current_mana)}')
 
         # handling winning scenarios
         if self.enemy.current_hp <= 0:

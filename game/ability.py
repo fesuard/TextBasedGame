@@ -7,6 +7,7 @@ class Ability(ABC):
         self.current_cd = 0
         self.type = 'damage'
         self.amount = 0
+        self.mana_cost = 0
 
     @abstractmethod
     def __str__(self):
@@ -31,7 +32,7 @@ class Frostbolt(Ability):
         self.total_cd = 3
         self.current_cd = 0
         self.amount = 30
-        self.used_mana = 20
+        self.mana_cost = 20
 
     def level_up(self):
         self.amount += self.amount * 0.15
@@ -46,7 +47,7 @@ class Firebolt(Ability):
         self.total_cd = 5
         self.current_cd = 0
         self.amount = 35
-        self.used_mana = 30
+        self.mana_cost = 30
 
     def level_up(self):
         self.amount += self.amount * 0.15
@@ -61,7 +62,7 @@ class Meteor(Ability):
         self.total_cd = 7
         self.current_cd = 0
         self.amount = 50
-        self.used_mana = 40
+        self.mana_cost = 40
 
     def level_up(self):
         pass
