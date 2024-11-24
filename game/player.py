@@ -101,7 +101,7 @@ class Mage(Player):
             self.abilities.append(meteor)
 
         self.current_hp = self.stats['max_hp']
-        self.current_mana = self.stats['max_mana']
+        self.current_mana = self.stats['max_mp']
 
     def show_abilities(self):
         abilities = []

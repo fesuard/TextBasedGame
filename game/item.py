@@ -33,6 +33,7 @@ class Grenade(Item):
         self.effect = 'bleed'
         self.dot_damage = 10
         self.dot_duration = 3
+        self.total_dot_duration = 3
         self.units = 1
         self.amount = 35
         self.cost = 10

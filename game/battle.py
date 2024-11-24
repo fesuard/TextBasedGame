@@ -23,14 +23,15 @@ class Battle:
 
     def use_damage_item(self, item):
         if item.effect:
+            item.dot_duration = item.total_dot_duration
             if item not in self.player_dots:
                 self.player_dots.append(item)
         self.enemy.current_hp -= item.amount
 
     def use_support_item(self, item):
         if str(item) == 'HpPot':
-            if self.player.current_hp + item.amount >= self.player.stats['hp']:
-                self.player.current_hp = self.player.stats['hp']
+            if self.player.current_hp + item.amount >= self.player.stats['max_hp']:
+                self.player.current_hp = self.player.stats['max_hp']
             else:
                 self.player.current_hp += item.amount
 
@@ -82,17 +83,21 @@ class Battle:
                             print('Not enough mana')
 
                         else:
-                            if player_ability.type == 'damage':
-                                self.enemy.current_hp -= player_ability.amount
+                            if player_ability.type == 'dot':
+                                player_ability.dot_duration = player_ability.total_dot_duration
+                                print(f'You have applied a {player_ability.effect} on {self.enemy}')
+                                if player_ability not in self.player_dots:
+                                    self.player_dots.append(player_ability)
 
-                                player_ability.current_cd = player_ability.total_cd
+                            if self.player.current_mana - player_ability.mana_cost > 0:
+                                self.player.current_mana -= player_ability.mana_cost
+                            else:
+                                self.player.current_mana = 0
 
-                                if self.player.current_mana - player_ability.mana_cost > 0:
-                                    self.player.current_mana -= player_ability.mana_cost
-                                else:
-                                    self.player.current_mana = 0
+                            self.enemy.current_hp -= player_ability.amount
+                            player_ability.current_cd = player_ability.total_cd
 
-                                valid_choice = True
+                            valid_choice = True
 
                     # Inventory choice
                     elif choice == 0:
@@ -102,19 +107,25 @@ class Battle:
                                 print(self.player.show_inventory())
                                 choice1 = int(input('> '))
                                 if choice1 in range(1, len(self.player.inventory) + 1):
-                                    player_item = self.player.inventory[choice - 1]
+                                    player_item = self.player.inventory[choice1 - 1]
                                     if player_item.units < 1:
                                         print(f'You are out of uses for {player_item}')
                                     else:
                                         if player_item.type == 'damage':
                                             self.use_damage_item(player_item)
+                                            if player_item.effect:
+                                                print(f'You have applied {player_item.effect} on {self.enemy}')
                                         elif player_item.type == 'support':
                                             self.use_support_item(player_item)
+                                            print(f'{player_item.increased_stat} + {player_item.amount}')
 
                                         player_item.units -= 1
 
                                         valid_choice1 = True
                                         valid_choice = True
+
+                                else:
+                                    print("Invalid choice, please chose between the available number of items")
 
                             except ValueError:
                                 print("Invalid input, please input a number corresponding to one of your items.")
@@ -150,15 +161,16 @@ class Battle:
             enemy_ability = self.enemy.get_ability()
             self.player.current_hp -= enemy_ability.amount
             if enemy_ability.type == 'dot':
+                enemy_ability.dot_duration = enemy_ability.total_dot_duration
                 if enemy_ability not in self.enemy_dots:
                     self.enemy_dots.append(enemy_ability)
 
             if enemy_ability not in self.used_enemy_abilities:
                 self.used_enemy_abilities.append(enemy_ability)
 
-            print(f'GOBLIN USED {enemy_ability} for {enemy_ability.amount} damage')
+            print(f'{self.enemy} USED {enemy_ability} for {enemy_ability.amount} damage')
             if enemy_ability.type == 'dot':
-                print(f"{self.enemy} applied a DOT on you")
+                print(f"{self.enemy} applied a {enemy_ability.effect} on you")
             enemy_ability.current_cd = enemy_ability.total_cd
 
             if self.player.current_hp > 0:

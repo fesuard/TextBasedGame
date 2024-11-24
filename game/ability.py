@@ -63,6 +63,11 @@ class Meteor(Ability):
         self.current_cd = 0
         self.amount = 50
         self.mana_cost = 40
+        self.type = 'dot'
+        self.effect = 'ablaze'
+        self.dot_damage = 15
+        self.dot_duration = 3
+        self.total_dot_duration = 3
 
     def level_up(self):
         pass
@@ -98,6 +103,7 @@ class Maim(Ability):
         self.current_cd = 0
         self.amount = 7
         self.type = 'dot'
+        self.effect = 'bleed'
         self.dot_damage = 5
         self.dot_duration = 5
         self.total_dot_duration = 5
