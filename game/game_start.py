@@ -2,11 +2,13 @@ from game.player import Mage, Warrior
 from game.enemy import Goblin
 from game.battle import Battle
 from game.story import Story
+from game.shop import Shop
 
 class GameStart:
     def __init__(self):
         self.player = None
         self.story = Story()
+        self.shop = Shop()
 
     def choose_class(self):
         print("Choose a class: 1) Mage 2) Warrior")
@@ -25,5 +27,7 @@ class GameStart:
     def start_game(self):
         self.story.get_chapter(0)
         self.choose_class()
+
         battle1 = Battle(self.player, Goblin())
         battle1.start()
+

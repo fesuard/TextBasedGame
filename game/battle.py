@@ -13,6 +13,7 @@ class Battle:
         self.used_player_abilities = []
         self.enemy_dots = []
         self.player_dots = []
+        self.outcome = ''
 
     def show_progress_bar(self, bar_length, total_stat, current_stat):
         hp_ratio = current_stat / total_stat
@@ -180,6 +181,7 @@ class Battle:
         # handling winning scenarios
         if self.enemy.current_hp <= 0:
             print(f'Congrats, you have slain the {self.enemy}\n')
+            self.outcome = 'win'
 
             if self.enemy.xp_for_player + self.player.current_xp >= self.player.stats['max_xp']:
                 leftover_xp = self.enemy.xp_for_player + self.player.current_xp - self.player.stats['max_xp']
@@ -192,6 +194,7 @@ class Battle:
         # handling losing scenario
         elif self.player.current_hp <= 0:
             print(f"You've Lost to {self.enemy}")
+            self.outcome = 'loss'
             input("Press any key to exit")
 
 

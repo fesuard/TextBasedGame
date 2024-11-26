@@ -11,6 +11,7 @@ class Player(ABC):
         self.abilities = []
         self.inventory = []
         self.gold = 0
+        self.armor = 0
         self.equipment = {
             'head': 'empty',
             'chest': 'empty',
