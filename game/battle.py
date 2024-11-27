@@ -58,6 +58,10 @@ class Battle:
                             else:
                                 print(f'PLAYER ABILITY {ability} CD IS: {ability.current_cd}')
 
+            # stat_check, to be deleted:
+            print(self.player.equipment)
+            print(self.player.armor)
+
             # Player dot management
             if self.player_dots:
                 for dot in self.player_dots:

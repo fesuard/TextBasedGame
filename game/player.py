@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from game.ability import MageAttack, Frostbolt, Firebolt, Meteor
-from game.item import Hppot, Grenade
+from game.item import Hppot, Grenade, MageSet
 
 
 class Player(ABC):
@@ -62,14 +62,26 @@ class Mage(Player):
             'armor_class': 'Cloth',
             'death_scream': "Oh my, seems like I'm in a bit of a conundrum"
         }
+
         self.current_hp = 80
         self.current_mana = 100
         self.current_xp = 0
         self.gold = 50
+
+        # Initial abilities and items
         normal_attack, frostbolt = MageAttack(), Frostbolt()
         hp_pot, grenade = Hppot(), Grenade()
         self.abilities.extend([normal_attack, frostbolt])
         self.inventory.extend([hp_pot, grenade])
+
+        # Initial armor set
+        mage_head_t1 = MageSet(mage=self, body_part='head', item_name='T1 Mage Helm', defence=3)
+        mage_chest_t1 = MageSet(mage=self, body_part='chest', item_name='T1 Mage Chest', defence=5)
+        mage_legs_t1 = MageSet(mage=self, body_part='legs', item_name='T1 Mage Legs', defence=2)
+        mage_hands_t1 = MageSet(mage=self, body_part='hands', item_name='T1 Mage Hands', defence=1)
+        first_armor = [mage_head_t1, mage_hands_t1, mage_chest_t1, mage_legs_t1, mage_hands_t1]
+        for item in first_armor:
+            item.equip()
 
     def level_up(self):
         self.level += 1
