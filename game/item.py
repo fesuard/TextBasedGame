@@ -26,6 +26,19 @@ class Hppot(Item):
     def __str__(self):
         return 'HpPot'
 
+
+class Mppot(Item):
+    def __init__(self):
+        super().__init__()
+        self.type = 'support'
+        self.units = 1
+        self.amount = 30
+        self.cost = 10
+        self.increased_stat = 'mp'
+
+    def __str__(self):
+        return 'MpPot'
+
 class Grenade(Item):
     def __init__(self):
         super().__init__()
@@ -43,11 +56,12 @@ class Grenade(Item):
 
 
 class MageSet:
-    def __init__(self, mage, body_part, item_name, defence):
+    def __init__(self, mage, body_part, item_name, defence, cost):
         self.mage = mage
         self.body_part = body_part
         self.item_name = item_name
         self.defence = defence
+        self.cost = cost
 
     def equip(self):
         self.mage.equipment[self.body_part] = self.item_name

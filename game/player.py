@@ -75,11 +75,11 @@ class Mage(Player):
         self.inventory.extend([hp_pot, grenade])
 
         # Initial armor set
-        mage_head_t1 = MageSet(mage=self, body_part='head', item_name='T1 Mage Helm', defence=3)
-        mage_chest_t1 = MageSet(mage=self, body_part='chest', item_name='T1 Mage Chest', defence=5)
-        mage_legs_t1 = MageSet(mage=self, body_part='legs', item_name='T1 Mage Legs', defence=2)
-        mage_hands_t1 = MageSet(mage=self, body_part='hands', item_name='T1 Mage Hands', defence=1)
-        first_armor = [mage_head_t1, mage_hands_t1, mage_chest_t1, mage_legs_t1, mage_hands_t1]
+        mage_head_t1 = MageSet(mage=self, body_part='head', item_name='T1 Mage Helm', defence=3, cost=5)
+        mage_chest_t1 = MageSet(mage=self, body_part='chest', item_name='T1 Mage Chest', defence=5, cost=10)
+        mage_legs_t1 = MageSet(mage=self, body_part='legs', item_name='T1 Mage Legs', defence=2, cost=4)
+        mage_hands_t1 = MageSet(mage=self, body_part='hands', item_name='T1 Mage Hands', defence=1, cost=3)
+        first_armor = [mage_head_t1, mage_chest_t1, mage_legs_t1, mage_hands_t1]
         for item in first_armor:
             item.equip()
 
