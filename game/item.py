@@ -39,6 +39,7 @@ class Mppot(Item):
     def __str__(self):
         return 'MpPot'
 
+
 class Grenade(Item):
     def __init__(self):
         super().__init__()
