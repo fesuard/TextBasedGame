@@ -31,10 +31,10 @@ class Battle:
 
     def use_support_item(self, item):
         if str(item) == 'HpPot':
-            if self.player.current_hp + item.amount >= self.player.stats['max_hp']:
-                self.player.current_hp = self.player.stats['max_hp']
-            else:
-                self.player.current_hp += item.amount
+            self.player.current_hp = min(self.player.stats['max_hp'], self.player.current_hp + item.amount)
+
+        if str(item) == 'MpPot':
+            self.player.current_mana = min(self.player.stats['max_mp'], self.player.current_hp + item.amount)
 
     def start(self):
         print('THE BATTLE HAS STARTED !')

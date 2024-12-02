@@ -57,20 +57,11 @@ class Grenade(Item):
 
 
 class MageSet:
-    def __init__(self, mage, body_part, item_name, defence, cost):
-        self.mage = mage
+    def __init__(self, body_part, item_name, defence, cost):
         self.body_part = body_part
         self.item_name = item_name
         self.defence = defence
         self.cost = cost
-
-    def equip(self):
-        self.mage.equipment[self.body_part] = self.item_name
-        self.mage.armor += self.defence
-
-    def unequip(self):
-        self.mage.equipment[self.body_part] = 'empty'
-        self.mage.armor -= self.defence
 
     def __str__(self):
         return self.item_name

@@ -29,6 +29,5 @@ class GameStart:
         self.choose_class()
 
         battle1 = Battle(self.player, Goblin())
-        self.shop.start_shop()
         battle1.start()
 

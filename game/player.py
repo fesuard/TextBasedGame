@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from game.ability import MageAttack, Frostbolt, Firebolt, Meteor
-from game.item import Hppot, Grenade, MageSet
+from game.item import Hppot, Grenade, MageSet, Mppot
 
 
 class Player(ABC):
@@ -36,6 +36,13 @@ class Player(ABC):
     def level_up(self):
         pass
 
+    @abstractmethod
+    def equip_item(self, item):
+        pass
+
+    @abstractmethod
+    def unequip_item(self, item):
+        pass
 
     @abstractmethod
     def show_abilities(self):
@@ -70,51 +77,41 @@ class Mage(Player):
 
         # Initial abilities and items
         normal_attack, frostbolt = MageAttack(), Frostbolt()
-        hp_pot, grenade = Hppot(), Grenade()
+        hp_pot, mp_pot, grenade = Hppot(), Mppot(), Grenade()
         self.abilities.extend([normal_attack, frostbolt])
-        self.inventory.extend([hp_pot, grenade])
+        self.inventory.extend([hp_pot, mp_pot, grenade])
 
         # Initial armor set
-        mage_head_t1 = MageSet(mage=self, body_part='head', item_name='T1 Mage Helm', defence=3, cost=5)
-        mage_chest_t1 = MageSet(mage=self, body_part='chest', item_name='T1 Mage Chest', defence=5, cost=10)
-        mage_legs_t1 = MageSet(mage=self, body_part='legs', item_name='T1 Mage Legs', defence=2, cost=4)
-        mage_hands_t1 = MageSet(mage=self, body_part='hands', item_name='T1 Mage Hands', defence=1, cost=3)
+        mage_head_t1 = MageSet(body_part='head', item_name='T1 Mage Helm', defence=3, cost=5)
+        mage_chest_t1 = MageSet(body_part='chest', item_name='T1 Mage Chest', defence=5, cost=10)
+        mage_legs_t1 = MageSet(body_part='legs', item_name='T1 Mage Legs', defence=2, cost=4)
+        mage_hands_t1 = MageSet(body_part='hands', item_name='T1 Mage Hands', defence=1, cost=3)
         first_armor = [mage_head_t1, mage_chest_t1, mage_legs_t1, mage_hands_t1]
         for item in first_armor:
-            item.equip()
+            self.equip_item(item)
 
     def level_up(self):
-        self.level += 1
+        # max level is 5
+        if self.level < 5:
+            self.level += 1
 
-        for ability in self.abilities:
-            ability.level_up()
+            for ability in self.abilities:
+                ability.level_up()
 
-        if self.level == 2:
             self.stats['max_hp'] += self.stats['max_hp'] * 0.15
             self.stats['damage'] += self.stats['damage'] * 0.10
             self.stats['max_xp'] += self.stats['max_xp'] * 0.20
 
-        if self.level == 3:
-            self.stats['max_hp'] += self.stats['max_hp'] * 0.15
-            self.stats['damage'] += self.stats['damage'] * 0.10
-            self.stats['max_xp'] += self.stats['max_xp'] * 0.20
-            firebolt = Firebolt()
-            self.abilities.append(firebolt)
+            if self.level == 3:
+                firebolt = Firebolt()
+                self.abilities.append(firebolt)
 
-        if self.level == 4:
-            self.stats['max_hp'] +=self.stats['max_hp'] * 0.15
-            self.stats['damage'] += self.stats['damage'] * 0.10
-            self.stats['max_xp'] += self.stats['max_xp'] * 0.20
+            if self.level == 5:
+                meteor = Meteor()
+                self.abilities.append(meteor)
 
-        if self.level == 5:
-            self.stats['max_hp'] += self.stats['max_hp'] * 0.15
-            self.stats['damage'] += self.stats['damage'] * 0.10
-            self.stats['max_xp'] += self.stats['max_xp'] * 0.20
-            meteor = Meteor()
-            self.abilities.append(meteor)
-
-        self.current_hp = self.stats['max_hp']
-        self.current_mana = self.stats['max_mp']
+            self.current_hp = self.stats['max_hp']
+            self.current_mana = self.stats['max_mp']
 
     def show_abilities(self):
         abilities = []
@@ -137,10 +134,18 @@ class Mage(Player):
                 self.current_hp += item.amount
 
         if item.increased_stat == 'mana':
-            if item.value + self.current_mana >= self.stats['max_mana']:
-                self.current_mana = self.stats['max_mana']
+            if item.value + self.current_mana >= self.stats['max_mp']:
+                self.current_mana = self.stats['max_mp']
             else:
                 self.current_mana += item.value
+
+    def equip_item(self, item):
+        self.equipment[item.body_part] = item.item_name
+        self.armor += item.defence
+
+    def unequip_item(self, item):
+        self.equipment[item.body_part] = 'empty'
+        self.armor -= item.defence
 
     def death(self):
         print(self.stats['death_scream'])

@@ -70,7 +70,8 @@ class Meteor(Ability):
         self.total_dot_duration = 3
 
     def level_up(self):
-        pass
+        self.amount += self.amount * 0.15
+        self.dot_damage += 3
 
     def __str__(self):
         return "Meteor"
