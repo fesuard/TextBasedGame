@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from game.ability import MageAttack, Frostbolt, Firebolt, Meteor
 from game.item import Hppot, Grenade, MageSet, Mppot
+from game.inventory import Inventory
 
 
 class Player(ABC):
@@ -9,7 +10,7 @@ class Player(ABC):
         self.current_xp = 0
         self.level = 1
         self.abilities = []
-        self.inventory = []
+        self.inventory = Inventory()
         self.gold = 0
         self.armor = 0
         self.equipment = {
@@ -75,11 +76,15 @@ class Mage(Player):
         self.current_xp = 0
         self.gold = 50
 
-        # Initial abilities and items
+        # Initial abilities
         normal_attack, frostbolt = MageAttack(), Frostbolt()
-        hp_pot, mp_pot, grenade = Hppot(), Mppot(), Grenade()
         self.abilities.extend([normal_attack, frostbolt])
-        self.inventory.extend([hp_pot, mp_pot, grenade])
+
+        # Initial items
+        hp_pot, mp_pot, grenade = Hppot(), Mppot(), Grenade()
+        item_list = hp_pot, mp_pot, grenade
+        for item in item_list:
+            self.inventory.add_item(item, 1)
 
         # Initial armor set
         mage_head_t1 = MageSet(body_part='head', item_name='T1 Mage Helm', defence=3, cost=5)
@@ -119,25 +124,11 @@ class Mage(Player):
             abilities.append(f'{i+1}. {self.abilities[i]}')
         return '\n'.join(abilities)
 
-    def show_inventory(self):
-        items = ['To use an item press:']
-        for i in range(len(self.inventory)):
-            items.append(f'{i+1}. {self.inventory[i]} - {self.inventory[i].units} uses remaining')
-        return '\n'.join(items)
-
-    def use_buff_item(self, item):
-
-        if item.increased_stat == 'hp':
-            if item.amount + self.current_hp >= self.stats['max_hp']:
-                self.current_hp = self.stats['max_hp']
-            else:
-                self.current_hp += item.amount
-
-        if item.increased_stat == 'mana':
-            if item.value + self.current_mana >= self.stats['max_mp']:
-                self.current_mana = self.stats['max_mp']
-            else:
-                self.current_mana += item.value
+    # def show_inventory(self):
+    #     items = ['To use an item press:']
+    #     for i in range(len(self.inventory)):
+    #         items.append(f'{i+1}. {self.inventory[i]} - {self.inventory[i].units} uses remaining')
+    #     return '\n'.join(items)
 
     def equip_item(self, item):
         self.equipment[item.body_part] = item.item_name

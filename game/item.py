@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 
 class Item(ABC):
     def __init__(self):
+        self.name = ''
         self.type = ''
         self.units = 0
         self.amount = 0
@@ -17,6 +18,7 @@ class Item(ABC):
 class Hppot(Item):
     def __init__(self):
         super().__init__()
+        self.name = 'HpPot'
         self.type = 'support'
         self.units = 1
         self.amount = 30
@@ -30,6 +32,7 @@ class Hppot(Item):
 class Mppot(Item):
     def __init__(self):
         super().__init__()
+        self.name = 'MpPot'
         self.type = 'support'
         self.units = 1
         self.amount = 30
@@ -43,6 +46,7 @@ class Mppot(Item):
 class Grenade(Item):
     def __init__(self):
         super().__init__()
+        self.name = 'Grenade'
         self.type = 'damage'
         self.effect = 'bleed'
         self.dot_damage = 10

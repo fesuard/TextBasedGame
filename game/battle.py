@@ -109,9 +109,9 @@ class Battle:
                         valid_choice1 = False
                         while not valid_choice1:
                             try:
-                                print(self.player.show_inventory())
+                                print(self.player.inventory.display_player_inventory())
                                 choice1 = int(input('> '))
-                                if choice1 in range(1, len(self.player.inventory) + 1):
+                                if choice1 in range(1, len(self.player.inventory.items) + 1):
                                     player_item = self.player.inventory[choice1 - 1]
                                     if player_item.units < 1:
                                         print(f'You are out of uses for {player_item}')
