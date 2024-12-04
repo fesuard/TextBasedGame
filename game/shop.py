@@ -1,29 +1,15 @@
-from game.item import Hppot, Mppot, Grenade, MageSet
+from game.item import mage_head_t2, mage_chest_t2, mage_legs_t2, mage_hands_t2, hp_pot, mp_pot, grenade
 
 
 class Shop:
     def __init__(self):
-        shop_hp_pot, shop_mp_pot, shop_grenade = Hppot(), Mppot(), Grenade()
-        item_list = [shop_hp_pot, shop_mp_pot, shop_grenade]
-
-        for item in item_list:
-            if str(item) != 'Grenade':
-                item.units = 3
-            else:
-                item.units = 5
-
-        mage_head_t2 = MageSet(body_part='head', item_name='T2 Mage Helm', defence=5, cost=10)
-        mage_chest_t2 = MageSet(body_part='chest', item_name='T2 Mage Chest', defence=7, cost=20)
-        mage_legs_t2 = MageSet(body_part='legs', item_name='T2 Mage Legs', defence=4, cost=8)
-        mage_hands_t2 = MageSet(body_part='hands', item_name='T2 Mage Hands', defence=2, cost=6)
-
         self.catalogue = {
-            'items': (shop_hp_pot, shop_mp_pot, shop_grenade),
+            'items': (hp_pot, mp_pot, grenade),
             'mage_armor': (mage_head_t2, mage_chest_t2, mage_legs_t2, mage_hands_t2)
         }
 
-    def buy_item(self, player, shop_item):
-        player.inventory.append(shop_item)
+    def sell_item(self, player, shop_item):
+        player.inventory.add_item(shop_item)
 
     def start_shop(self):
         while True:

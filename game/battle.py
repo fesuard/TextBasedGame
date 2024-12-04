@@ -112,8 +112,8 @@ class Battle:
                                 print(self.player.inventory.display_player_inventory())
                                 choice1 = int(input('> '))
                                 if choice1 in range(1, len(self.player.inventory.items) + 1):
-                                    player_item = self.player.inventory[choice1 - 1]
-                                    if player_item.units < 1:
+                                    player_item = self.player.inventory.items[choice1 - 1]
+                                    if self.player.inventory.item_units[player_item.name] < 1:
                                         print(f'You are out of uses for {player_item}')
                                     else:
                                         if player_item.type == 'damage':
@@ -124,7 +124,7 @@ class Battle:
                                             self.use_support_item(player_item)
                                             print(f'{player_item.increased_stat} + {player_item.amount}')
 
-                                        player_item.units -= 1
+                                        self.player.inventory.item_units[player_item.name] -= 1
 
                                         valid_choice1 = True
                                         valid_choice = True

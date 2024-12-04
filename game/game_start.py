@@ -8,7 +8,7 @@ class GameStart:
     def __init__(self):
         self.player = None
         self.story = Story()
-        self.shop = Shop(self.player)
+        self.shop = Shop()
 
     def choose_class(self):
         print("Choose a class: 1) Mage 2) Warrior")

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from game.ability import MageAttack, Frostbolt, Firebolt, Meteor
-from game.item import Hppot, Grenade, MageSet, Mppot
+from game.item import mage_head_t1, mage_chest_t1, mage_legs_t1, mage_hands_t1, hp_pot, mp_pot, grenade
 from game.inventory import Inventory
 
 
@@ -49,14 +49,6 @@ class Player(ABC):
     def show_abilities(self):
         pass
 
-    @abstractmethod
-    def show_inventory(self):
-        pass
-
-    @abstractmethod
-    def use_buff_item(self, item):
-        pass
-
 
 class Mage(Player):
     def __init__(self, name):
@@ -81,16 +73,11 @@ class Mage(Player):
         self.abilities.extend([normal_attack, frostbolt])
 
         # Initial items
-        hp_pot, mp_pot, grenade = Hppot(), Mppot(), Grenade()
-        item_list = hp_pot, mp_pot, grenade
+        item_list = [hp_pot, mp_pot, grenade]
         for item in item_list:
             self.inventory.add_item(item, 1)
 
         # Initial armor set
-        mage_head_t1 = MageSet(body_part='head', item_name='T1 Mage Helm', defence=3, cost=5)
-        mage_chest_t1 = MageSet(body_part='chest', item_name='T1 Mage Chest', defence=5, cost=10)
-        mage_legs_t1 = MageSet(body_part='legs', item_name='T1 Mage Legs', defence=2, cost=4)
-        mage_hands_t1 = MageSet(body_part='hands', item_name='T1 Mage Hands', defence=1, cost=3)
         first_armor = [mage_head_t1, mage_chest_t1, mage_legs_t1, mage_hands_t1]
         for item in first_armor:
             self.equip_item(item)
@@ -131,7 +118,7 @@ class Mage(Player):
     #     return '\n'.join(items)
 
     def equip_item(self, item):
-        self.equipment[item.body_part] = item.item_name
+        self.equipment[item.body_part] = item.name
         self.armor += item.defence
 
     def unequip_item(self, item):
