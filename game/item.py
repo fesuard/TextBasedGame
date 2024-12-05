@@ -86,6 +86,15 @@ mage_chest_t2 = MageSet(name='T2 Mage Chest', body_part='chest', defence=7, cost
 mage_legs_t2 = MageSet(name='T2 Mage Legs', body_part='legs', defence=4, cost=8)
 mage_hands_t2 = MageSet(name='T1 Mage Hands', body_part='hands', defence=2, cost=6)
 
+
+@dataclass
+class WarriorSet:
+    name: str
+    body_part: str
+    defence: int
+    cost: int
+
+
 @dataclass
 class UsableItem:
     name: str

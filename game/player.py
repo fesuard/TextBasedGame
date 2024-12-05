@@ -38,6 +38,10 @@ class Player(ABC):
         pass
 
     @abstractmethod
+    def buy_item(self, shop, item, quantity):
+        pass
+
+    @abstractmethod
     def equip_item(self, item):
         pass
 
@@ -116,6 +120,9 @@ class Mage(Player):
     #     for i in range(len(self.inventory)):
     #         items.append(f'{i+1}. {self.inventory[i]} - {self.inventory[i].units} uses remaining')
     #     return '\n'.join(items)
+
+    def buy_item(self, shop, item, quantity):
+        pass
 
     def equip_item(self, item):
         self.equipment[item.body_part] = item.name

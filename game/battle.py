@@ -58,7 +58,7 @@ class Battle:
                             else:
                                 print(f'PLAYER ABILITY {ability} CD IS: {ability.current_cd}')
 
-            # stat_check, to be deleted:
+            # Stat_check, to be deleted:
             print(self.player.equipment)
             print(self.player.armor)
 
@@ -109,7 +109,7 @@ class Battle:
                         valid_choice1 = False
                         while not valid_choice1:
                             try:
-                                print(self.player.inventory.display_player_inventory())
+                                print(self.player.inventory.display_player_usable_items())
                                 choice1 = int(input('> '))
                                 if choice1 in range(1, len(self.player.inventory.items) + 1):
                                     player_item = self.player.inventory.items[choice1 - 1]
