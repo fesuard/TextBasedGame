@@ -8,7 +8,7 @@ class Inventory:
         self.armor = []
 
     def add_item(self, item, quantity):
-        # adding the items and the quantity in the dict
+        # adding the item names and the quantity in the dict
         if item.name not in self.item_units:
             self.item_units[item.name] = quantity
         else:
@@ -48,7 +48,13 @@ class Inventory:
 
     def display_shop_inventory(self):
         shop_print = [f'Welcome to KweZ Shop!\nI am your humble merchant KweZ\nPlease choose from the following:\n']
-        shop_print.extend(['Items', 'Armor\n'.rjust(17)])
-        shop_print.extend([f'1. {self.items[0].name}', f'2. {self.armor[0].name}\n'.rjust(24)])
+        shop_print.extend(['\nItems', 'Armor\n'.rjust(17)])
+        shop_print.extend([f'1. {self.items[0].name} - {self.item_units[self.items[0].name]}',
+                           f'4. {self.armor[0].name} - {self.item_units[self.armor[0].name]}\n'.rjust(24)])
+        shop_print.extend([f'2. {self.items[1].name} - {self.item_units[self.items[1].name]}',
+                           f'5. {self.armor[1].name} - {self.item_units[self.armor[1].name]}\n'.rjust(25)])
+        shop_print.extend([f'3. {self.items[2].name} - {self.item_units[self.items[2].name]}',
+                           f'6. {self.armor[2].name} - {self.item_units[self.armor[2].name]}\n'.rjust(22)])
+        shop_print.append(f'7. {self.armor[3].name} - {self.item_units[self.armor[3].name]}\n'.rjust(32))
         return ''.join(shop_print)
 

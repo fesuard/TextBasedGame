@@ -4,6 +4,7 @@ from game.item import mage_head_t1, mage_chest_t1, mage_legs_t1, mage_hands_t1, 
 from game.inventory import Inventory
 
 
+
 class Player(ABC):
     def __init__(self, name):
         self.name = name
@@ -35,10 +36,6 @@ class Player(ABC):
 
     @abstractmethod
     def level_up(self):
-        pass
-
-    @abstractmethod
-    def buy_item(self, shop, item, quantity):
         pass
 
     @abstractmethod
@@ -114,15 +111,6 @@ class Mage(Player):
         for i in range(len(self.abilities)):
             abilities.append(f'{i+1}. {self.abilities[i]}')
         return '\n'.join(abilities)
-
-    # def show_inventory(self):
-    #     items = ['To use an item press:']
-    #     for i in range(len(self.inventory)):
-    #         items.append(f'{i+1}. {self.inventory[i]} - {self.inventory[i].units} uses remaining')
-    #     return '\n'.join(items)
-
-    def buy_item(self, shop, item, quantity):
-        pass
 
     def equip_item(self, item):
         self.equipment[item.body_part] = item.name

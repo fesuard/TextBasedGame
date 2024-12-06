@@ -3,9 +3,11 @@ from game.item import mage_head_t2, mage_chest_t2, mage_legs_t2, mage_hands_t2, 
 
 
 class Shop:
-    def __init__(self):
+    def __init__(self, player):
+        self.player = player
         self.inventory = Inventory()
         self.initialize_shop_inventory()
+
 
     def initialize_shop_inventory(self):
         item_list = [hp_pot, mp_pot, grenade]
@@ -17,32 +19,44 @@ class Shop:
         for item in armor_set:
             self.inventory.add_item(item, 1)
 
-    def sell_item(self, item, quantity):
-        pass
+    def sell_item(self, player, item, quantity):
+        total_cost = item * quantity
+
+        if player.gold < total_cost:
+            print(f'Not enough gold {total_cost}/{player.gold}')
+
+        elif self.inventory.item_units[item.name] < quantity:
+            print(f'Not enough inventory{self.inventory.item_units[item.name]}/{quantity}')
+
+        else:
+            print(f'You have bought {quantity} x {item.name} for {total_cost}')
+            player.gold -= total_cost
+            self.inventory.item_units[item.name] -= quantity
 
     def start_shop(self):
-        pass
-#         while True:
-#             print('Welcome to KweZ Shop!\nI am your humble merchant KweZ\nPlease choose from the following:\n')
-#
-#             # Displaying the inventory
-#             print('Items', 'Armor'.rjust(17))
-#             print(f'1. {self.catalogue['items'][0]}', f'4. {self.catalogue['mage_armor'][0]}'.rjust(24))
-#             print(f'2. {self.catalogue['items'][1]}', f'5. {self.catalogue['mage_armor'][1]}'.rjust(25))
-#             print(f'3. {self.catalogue['items'][2]}', f'6. {self.catalogue['mage_armor'][2]}'.rjust(22))
-#             print(f'7. {self.catalogue['mage_armor'][3]}'.rjust(34))
-#
-#             valid_choice = False
-#             while not valid_choice:
-#                 try:
-#                     choice = int(input('> '))
-#                     if choice in range(1, 4):
-#                         if choice == 1:
-#                             if self.catalogue['items'][choice - 1].units > 0:
-#                                 self.catalogue['items'][choice - 1].units -= 1
-#
-#                 except ValueError:
-#                     print('Invalid input, please input a number corresponding to one one of the shop items')
-#
-shop = Shop()
-print(shop.inventory.display_shop_inventory())
+        while True:
+            valid_choice = False
+            while not valid_choice:
+                try:
+                    len_items = len(self.inventory.items)
+                    len_armor = len(self.inventory.armor)
+                    len_total = len_items + len_armor
+                    self.inventory.display_shop_inventory()
+                    item_choice = int(input('> '))
+                    print('How many?')
+                    quantity_choice = int(input('> '))
+
+                    # for usable items
+                    if item_choice in range(1, len_items + 1):
+                        shop_item = self.inventory.items[item_choice - 1]
+                        self.sell_item(self.player, shop_item, quantity_choice)
+
+                    # for armor
+                    if item_choice in range(len_items + 1, len_total + 1):
+                        shop_item = self.inventory.armor[item_choice - len_items - 1]
+                        self.sell_item(self.player, shop_item, quantity_choice)
+
+
+                except ValueError:
+                    print('Invalid input, please input a number corresponding to one one of the shop items')
+
