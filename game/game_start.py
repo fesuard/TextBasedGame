@@ -24,10 +24,13 @@ class GameStart:
             print("Invalid choice, please choose between the available classes")
             self.choose_class()
 
+        # initialize shop
+        self.shop = Shop(self.player)
+
     def start_game(self):
         self.story.get_chapter(0)
         self.choose_class()
 
         battle1 = Battle(self.player, Goblin())
-        battle1.start()
-        # print(self.shop.inventory.display_shop_inventory())
+        # battle1.start()
+        self.shop.start_shop()

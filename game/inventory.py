@@ -22,13 +22,13 @@ class Inventory:
             if item not in self.items:
                 self.items.append(item)
 
-    def remove_item(self, item, quantity):
-        if item.name in self.items:
-            self.items[item.name] -= quantity
-            if self.items[item.name] <= 0:
-                del self.items[item.name]
-        else:
-            print(f'{item.name} is not in the inventory.')
+    # def remove_item(self, item, quantity):
+    #     if item.name in self.items:
+    #         self.items[item.name] -= quantity
+    #         if self.items[item.name] <= 0:
+    #             del self.items[item.name]
+    #     else:
+    #         print(f'{item.name} is not in the inventory.')
 
     def display_player_usable_items(self):
         for item in self.items:
@@ -39,22 +39,39 @@ class Inventory:
             inventory = ['To use an item press:']
 
             for i in range(len(self.items)):
-                inventory.append(f'{i+1}. {self.items[i]} - {self.item_units[self.items[i].name]} units remaining')
+                inventory.append(f'{i+1}. {self.items[i].name} - {self.item_units[self.items[i].name]} units remaining')
 
-            return '\n'.join(inventory)
+            print('\n'.join(inventory))
 
         else:
-            return 'No usable items!'
+            print('No usable items!')
+
+    def display_player_inventory(self):
+        # displaying usable items
+        print('Usable Items')
+        if self.items:
+            for item in self.items:
+                print(f'{item.name} - {self.item_units[item.name]}')
+        else:
+            print('No usable items')
+
+        print('Armor')
+        if self.armor:
+            for i in range(len(self.armor)):
+                print(f'{self.armor[i].name} - {self.item_units[self.armor[i].name]}')
+        else:
+            print('No armor')
 
     def display_shop_inventory(self):
         shop_print = [f'Welcome to KweZ Shop!\nI am your humble merchant KweZ\nPlease choose from the following:\n']
-        shop_print.extend(['\nItems', 'Armor\n'.rjust(17)])
+        shop_print.extend(['\nItems', 'Armor\n'.rjust(19)])
         shop_print.extend([f'1. {self.items[0].name} - {self.item_units[self.items[0].name]}',
-                           f'4. {self.armor[0].name} - {self.item_units[self.armor[0].name]}\n'.rjust(24)])
+                           f'4. {self.armor[0].name} - {self.item_units[self.armor[0].name]}\n'.rjust(26)])
         shop_print.extend([f'2. {self.items[1].name} - {self.item_units[self.items[1].name]}',
-                           f'5. {self.armor[1].name} - {self.item_units[self.armor[1].name]}\n'.rjust(25)])
+                           f'5. {self.armor[1].name} - {self.item_units[self.armor[1].name]}\n'.rjust(27)])
         shop_print.extend([f'3. {self.items[2].name} - {self.item_units[self.items[2].name]}',
-                           f'6. {self.armor[2].name} - {self.item_units[self.armor[2].name]}\n'.rjust(22)])
-        shop_print.append(f'7. {self.armor[3].name} - {self.item_units[self.armor[3].name]}\n'.rjust(32))
-        return ''.join(shop_print)
-
+                           f'6. {self.armor[2].name} - {self.item_units[self.armor[2].name]}\n'.rjust(24)])
+        shop_print.append(f'7. {self.armor[3].name} - {self.item_units[self.armor[3].name]}\n\n'.rjust(40))
+        shop_print.append('9. Go to your inventory\n')
+        shop_print.append('0. EXIT shop')
+        print(''.join(shop_print))
