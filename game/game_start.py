@@ -11,18 +11,30 @@ class GameStart:
         self.shop = Shop(self.player)
 
     def choose_class(self):
-        print("Choose a class: 1) Mage 2) Warrior")
-        option = input("> ")
-        print("Name your character")
-        name = input("> ")
+        valid_choice = False
 
-        if option == '1':
-            self.player = Mage(name)
-        elif option == '2':
-            self.player = Warrior(name)
-        else:
-            print("Invalid choice, please choose between the available classes")
-            self.choose_class()
+        while not valid_choice:
+            try:
+                print("Choose a class: 1) Mage 2) Warrior")
+                option = int(input("> "))
+
+                if option in range(1, 3):
+                    print("Name your character")
+                    name = input("> ")
+
+                    if option == 1:
+                        self.player = Mage(name)
+
+                    elif option == 2:
+                        self.player = Warrior(name)
+
+                    valid_choice = True
+
+                else:
+                    print("Invalid choice, please choose between the available classes")
+
+            except ValueError:
+                print("Invalid choice, please choose between the available classes")
 
         # initialize shop
         self.shop = Shop(self.player)

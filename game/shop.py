@@ -23,7 +23,7 @@ class Shop:
         total_cost = item.cost * quantity
 
         if player.gold < total_cost:
-            print(f'Not enough gold {total_cost}/{player.gold}')
+            print(f'Not enough gold {player.gold}/{total_cost}')
 
         elif self.inventory.item_units[item.name] < quantity:
             print(f'Not enough inventory{self.inventory.item_units[item.name]}/{quantity}')
@@ -44,29 +44,59 @@ class Shop:
                     len_total = len_items + len_armor
                     self.inventory.display_shop_inventory()
                     item_choice = int(input('> '))
-                    quantity_choice = 0
 
-                    if item_choice in range(1, len_items + len_armor + 1):
-                        print('How many?')
-                        quantity_choice = int(input('> '))
+                    # checking if it's a valid choice overall
+                    if item_choice in range(0, 10):
 
-                    # for usable items
-                    if item_choice in range(1, len_items + 1):
-                        shop_item = self.inventory.items[item_choice - 1]
-                        self.sell_item(self.player, shop_item, quantity_choice)
+                        # checking if it's an item choice
+                        if item_choice in range(len_items + len_armor + 1):
+                            print('How many?')
+                            quantity_choice = int(input('> '))
 
-                    # for armor
-                    elif item_choice in range(len_items + 1, len_total + 1):
-                        shop_item = self.inventory.armor[item_choice - len_items - 1]
-                        self.sell_item(self.player, shop_item, quantity_choice)
+                            # for usable items
+                            if item_choice in range(1, len_items + 1):
+                                shop_item = self.inventory.items[item_choice - 1]
+                                self.sell_item(self.player, shop_item, quantity_choice)
 
-                    # to go to player inventory
-                    elif item_choice == 9:
-                        self.player.inventory.display_player_inventory()
+                            # for armor
+                            elif item_choice in range(len_items + 1, len_total + 1):
+                                shop_item = self.inventory.armor[item_choice - len_items - 1]
+                                self.sell_item(self.player, shop_item, quantity_choice)
 
-                    # shop exit
-                    elif item_choice == 0:
-                        valid_choice = True
+                        # to go to player inventory
+                        elif item_choice == 9:
+                            valid_choice2 = False
+                            while not valid_choice2:
+                                try:
+                                    self.player.inventory.display_player_inventory()
+                                    print('If you want to equip an armor piece, press 1\n')
+                                    print('If you want to return to the shop, press 0\n')
+                                    inventory_choice = int(input('> '))
+
+                                    # to equip/unequip armor
+                                    if inventory_choice == 1:
+                                        valid_choice3 = False
+                                        while not valid_choice3:
+                                            try:
+                                                self.player.inventory.display_player_equipable_items()
+                                                armor_choice = int(input('> '))
+
+                                                if armor_choice in range(1, len(self.player.inventory.armor) + 1):
+                                                    pass
+
+                                            except ValueError:
+                                                print('Please enter a valid input')
+
+
+                                except ValueError:
+                                    print('Invalid input')
+
+                        # shop exit
+                        elif item_choice == 0:
+                            valid_choice = True
+
+                    else:
+                        print('Invalid input, please input a number corresponding to one one of the shop items')
 
                 except ValueError:
                     print('Invalid input, please input a number corresponding to one one of the shop items')

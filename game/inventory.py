@@ -36,15 +36,26 @@ class Inventory:
                 self.items.remove(item)
 
         if self.items:
-            inventory = ['To use an item press:']
+            item_inventory = ['To use an item press:']
 
             for i in range(len(self.items)):
-                inventory.append(f'{i+1}. {self.items[i].name} - {self.item_units[self.items[i].name]} units remaining')
+                item_inventory.append(f'{i + 1}. {self.items[i].name} - {self.item_units[self.items[i].name]} units remaining')
 
-            print('\n'.join(inventory))
+            print('\n'.join(item_inventory))
 
         else:
             print('No usable items!')
+
+    def display_player_equipable_items(self):
+        for armor in self.armor:
+            if self.item_units[armor.name] == 0:
+                self.armor.remove(armor)
+
+        if self.armor:
+            armor_inventory = ['To equip an armor piece press:']
+
+            for i in range(len(self.armor)):
+                armor_inventory.append(f'{i + 1}. {self.armor[i]}')
 
     def display_player_inventory(self):
         # displaying usable items
@@ -60,7 +71,7 @@ class Inventory:
             for i in range(len(self.armor)):
                 print(f'{self.armor[i].name} - {self.item_units[self.armor[i].name]}')
         else:
-            print('No armor')
+            print('No armor\n')
 
     def display_shop_inventory(self):
         shop_print = [f'Welcome to KweZ Shop!\nI am your humble merchant KweZ\nPlease choose from the following:\n']
@@ -73,5 +84,5 @@ class Inventory:
                            f'6. {self.armor[2].name} - {self.item_units[self.armor[2].name]}\n'.rjust(24)])
         shop_print.append(f'7. {self.armor[3].name} - {self.item_units[self.armor[3].name]}\n\n'.rjust(40))
         shop_print.append('9. Go to your inventory\n')
-        shop_print.append('0. EXIT shop')
+        shop_print.append('0. EXIT shop\n')
         print(''.join(shop_print))
