@@ -55,7 +55,12 @@ class Inventory:
             armor_inventory = ['To equip an armor piece press:']
 
             for i in range(len(self.armor)):
-                armor_inventory.append(f'{i + 1}. {self.armor[i]}')
+                armor_inventory.append(f'{i + 1}. {self.armor[i].name} - {self.armor[i].defence}')
+
+            print('\n'.join(armor_inventory))
+
+        else:
+            print('No armor in inventory')
 
     def display_player_inventory(self):
         # displaying usable items

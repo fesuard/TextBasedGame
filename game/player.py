@@ -116,9 +116,14 @@ class Mage(Player):
         self.equipment[item.body_part] = item.name
         self.armor += item.defence
 
+        # removing the item from the equipable item list, since it is already equipped
+        if item in self.inventory.armor:
+            self.inventory.armor.remove(item)
+
     def unequip_item(self, item):
         self.equipment[item.body_part] = 'empty'
         self.armor -= item.defence
+        self.inventory.add_item(item, 1)
 
     def death(self):
         print(self.stats['death_scream'])

@@ -71,6 +71,9 @@ class Shop:
                                     self.player.inventory.display_player_inventory()
                                     print('If you want to equip an armor piece, press 1\n')
                                     print('If you want to return to the shop, press 0\n')
+                                    print('Currently equipped items:\n')
+                                    print(self.player.equipment)
+                                    print(f'Total defence: {self.player.armor}')
                                     inventory_choice = int(input('> '))
 
                                     # to equip/unequip armor
@@ -79,14 +82,30 @@ class Shop:
                                         while not valid_choice3:
                                             try:
                                                 self.player.inventory.display_player_equipable_items()
-                                                armor_choice = int(input('> '))
+                                                if self.player.inventory.armor:
+                                                    armor_choice = int(input('> '))
 
-                                                if armor_choice in range(1, len(self.player.inventory.armor) + 1):
-                                                    pass
+                                                    if armor_choice in range(1, len(self.player.inventory.armor) + 1):
+                                                        armor_piece = self.player.inventory.armor[armor_choice - 1]
+                                                        body_part = armor_piece.body_part
+                                                        removed_armor = self.player.equipment[body_part]
+
+                                                        self.player.unequip_item(removed_armor)
+
+                                                        self.player.equip_item(armor_piece)
+
+                                                        valid_choice3 = True
+
+                                                else:
+                                                    print('Press any key to continue')
+                                                    input('> ')
+                                                    valid_choice3 = True
 
                                             except ValueError:
                                                 print('Please enter a valid input')
 
+                                    elif inventory_choice == 0:
+                                        valid_choice2 = True
 
                                 except ValueError:
                                     print('Invalid input')
