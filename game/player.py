@@ -113,7 +113,7 @@ class Mage(Player):
         return '\n'.join(abilities)
 
     def equip_item(self, item):
-        self.equipment[item.body_part] = item.name
+        self.equipment[item.body_part] = item
         self.armor += item.defence
 
         # removing the item from the equipable item list, since it is already equipped

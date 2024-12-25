@@ -72,7 +72,12 @@ class Shop:
                                     print('If you want to equip an armor piece, press 1\n')
                                     print('If you want to return to the shop, press 0\n')
                                     print('Currently equipped items:\n')
-                                    print(self.player.equipment)
+
+                                    # displaying the currently equipped items
+                                    for key, value in self.player.equipment.items():
+                                        if type(value) != str:
+                                            print(f'{key}: {value.name}')
+
                                     print(f'Total defence: {self.player.armor}')
                                     inventory_choice = int(input('> '))
 

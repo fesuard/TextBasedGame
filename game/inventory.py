@@ -55,7 +55,7 @@ class Inventory:
             armor_inventory = ['To equip an armor piece press:']
 
             for i in range(len(self.armor)):
-                armor_inventory.append(f'{i + 1}. {self.armor[i].name} - {self.armor[i].defence}')
+                armor_inventory.append(f'{i + 1}. {self.armor[i].name} - {self.armor[i].defence} defence')
 
             print('\n'.join(armor_inventory))
 
