@@ -28,16 +28,18 @@ class Story:
         for line in file:
             line = line.strip()
 
+            # when finding a new chapter, we save the previous one
             if line.startswith('Chapter'):
-                chapter_number = line
-                if chapter_number:
+                if chapter_number is not None:
                     chapters[chapter_number] = '\n'.join(current_text)
-                    current_text = []
+
+                chapter_number = line
+                current_text = []
 
             else:
                 current_text.append(line)
 
-        #adding the last chapter
+        # adding the last chapter
         if chapter_number:
             chapters[chapter_number] = '\n'.join(current_text)
 

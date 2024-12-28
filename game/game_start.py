@@ -44,5 +44,5 @@ class GameStart:
         self.choose_class()
 
         battle1 = Battle(self.player, Goblin())
-        # battle1.start()
+        battle1.start()
         self.shop.start_shop()
