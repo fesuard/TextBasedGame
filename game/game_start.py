@@ -15,7 +15,7 @@ class GameStart:
 
         while not valid_choice:
             try:
-                print("Choose a class: 1) Mage 2) Warrior")
+                print("\nChoose a class: 1) Mage 2) Warrior")
                 option = int(input("> "))
 
                 if option in range(1, 3):
@@ -40,9 +40,14 @@ class GameStart:
         self.shop = Shop(self.player)
 
     def start_game(self):
+        # starting the game, choosing the class
         self.story.get_chapter(0)
         self.choose_class()
 
+        # battle 1
         battle1 = Battle(self.player, Goblin())
         battle1.start()
+
+        # post battle 1
+        self.story.get_chapter(1)
         self.shop.start_shop()

@@ -4,7 +4,7 @@ class Battle:
     def __init__(self, player, enemy):
         self.player = player
         self.enemy = enemy
-        self.menu = (f'    YOU ARE FIGHTING AGAINST THE FEARSOME {self.enemy}\n'
+        self.menu = (f'\n    YOU ARE FIGHTING AGAINST THE FEARSOME {self.enemy}\n'
                      f'\n To use an ability press:\n'
                      f'{self.player.show_abilities()}\n'
                      f'0. To go to your inventory\n')
@@ -43,8 +43,6 @@ class Battle:
         print(f'Your HP {self.show_progress_bar(25, self.player.stats['max_hp'], self.player.current_hp)}')
         print(f'Your MP {self.show_progress_bar(25, self.player.stats['max_mp'], self.player.current_mana)}')
         while self.player.current_hp > 0 and self.enemy.current_hp > 0:
-            print(self.menu)
-
             # Player round:
 
             # Cooldown management
@@ -58,10 +56,6 @@ class Battle:
                             else:
                                 print(f'PLAYER ABILITY {ability} CD IS: {ability.current_cd}')
 
-            # Stat_check, to be deleted:
-            print(self.player.equipment)
-            print(self.player.armor)
-
             # Player dot management
             if self.player_dots:
                 for dot in self.player_dots:
@@ -74,6 +68,7 @@ class Battle:
             valid_choice = False
             while not valid_choice:
                 try:
+                    print(self.menu)
                     choice = int(input('> '))
                     if choice in range(1, len(self.player.abilities) + 1):
                         player_ability = self.player.abilities[choice - 1]
@@ -110,7 +105,10 @@ class Battle:
                         while not valid_choice1:
                             try:
                                 self.player.inventory.display_player_usable_items()
+                                print("0. Go back to abilities")
                                 choice1 = int(input('> '))
+
+                                # choosing between usable items
                                 if choice1 in range(1, len(self.player.inventory.items) + 1):
                                     player_item = self.player.inventory.items[choice1 - 1]
                                     if self.player.inventory.item_units[player_item.name] < 1:
@@ -129,6 +127,10 @@ class Battle:
                                         valid_choice1 = True
                                         valid_choice = True
 
+                                # return to ability menu
+                                elif choice1 == 0:
+                                    valid_choice1 = True
+
                                 else:
                                     print("Invalid choice, please chose between the available number of items")
 
@@ -144,6 +146,10 @@ class Battle:
             if self.enemy.current_hp > 0:
                 print(f'{self.enemy} {self.show_progress_bar(25, self.enemy.total_hp, self.enemy.current_hp)}')
                 print('\n\n')
+
+            # if enemy hp is below or equal to 0, we skip his turn and go to the winning scenario
+            else:
+                break
 
             # Enemy round:
 
