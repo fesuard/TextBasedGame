@@ -112,6 +112,19 @@ class Mage(Player):
             abilities.append(f'{i+1}. {self.abilities[i]}')
         return '\n'.join(abilities)
 
+    def display_player_current_equipped_items(self):
+        for key, value in self.equipment.items():
+
+            # this is to display the body parts with no equipped armor
+            if value == 'empty':
+                print(f'{key}: {value}')
+
+            # this is to display the equipped body parts
+            else:
+                print(f'{key}: {value.name}')
+
+        print(f'Total defence: {self.armor}')
+
     def equip_item(self, item):
         self.equipment[item.body_part] = item
         self.armor += item.defence

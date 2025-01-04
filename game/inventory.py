@@ -71,7 +71,7 @@ class Inventory:
         else:
             print('No usable items')
 
-        print('Armor')
+        print('\nArmor')
         if self.armor:
             for i in range(len(self.armor)):
                 print(f'{self.armor[i].name} - {self.item_units[self.armor[i].name]}')

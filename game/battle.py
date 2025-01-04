@@ -199,7 +199,6 @@ class Battle:
                 self.player.current_xp += leftover_xp
                 print("YOU LEVELED UP")
                 print(self.player.stats)
-                print(self.player.current_xp, self.player.current_mana)
 
         # handling losing scenario
         elif self.player.current_hp <= 0:

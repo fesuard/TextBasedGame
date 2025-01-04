@@ -49,7 +49,7 @@ class Shop:
                     if item_choice in range(0, 10):
 
                         # checking if it's an item choice
-                        if item_choice in range(len_items + len_armor + 1):
+                        if item_choice in range(len_total + 1):
                             print('How many?')
                             quantity_choice = int(input('> '))
 
@@ -70,15 +70,12 @@ class Shop:
                                 try:
                                     self.player.inventory.display_player_inventory()
                                     print('If you want to equip an armor piece, press 1\n')
+                                    print('If you want to sell an item, press 2\n')
                                     print('If you want to return to the shop, press 0\n')
                                     print('Currently equipped items:\n')
 
                                     # displaying the currently equipped items
-                                    for key, value in self.player.equipment.items():
-                                        if type(value) != str:
-                                            print(f'{key}: {value.name}')
-
-                                    print(f'Total defence: {self.player.armor}')
+                                    self.player.display_player_current_equipped_items()
                                     inventory_choice = int(input('> '))
 
                                     # to equip/unequip armor
@@ -108,6 +105,10 @@ class Shop:
 
                                             except ValueError:
                                                 print('Please enter a valid input')
+
+                                    # to sell items
+                                    elif inventory_choice == 2:
+                                        pass
 
                                     elif inventory_choice == 0:
                                         valid_choice2 = True
