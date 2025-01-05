@@ -63,18 +63,22 @@ class Inventory:
             print('No armor in inventory')
 
     def display_player_inventory(self):
+        len_items = len(self.items)
+        len_armor = len(self.armor)
+
         # displaying usable items
         print('Usable Items')
         if self.items:
-            for item in self.items:
-                print(f'{item.name} - {self.item_units[item.name]}')
+            for i in range(len_items):
+                print(f'{i + 1}. {self.items[i].name}, quantity: {self.item_units[self.items[i].name]}, price: {self.items[i].cost}')
         else:
             print('No usable items')
 
+        # displaying armor
         print('\nArmor')
         if self.armor:
-            for i in range(len(self.armor)):
-                print(f'{self.armor[i].name} - {self.item_units[self.armor[i].name]}')
+            for i in range(len_armor):
+                print(f'{i + 1 + len_items}. {self.armor[i].name}, quantity: {self.item_units[self.armor[i].name]}, price: {self.armor[i].cost}')
         else:
             print('No armor\n')
 

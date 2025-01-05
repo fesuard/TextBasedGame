@@ -24,9 +24,13 @@ class Shop:
 
         if player.gold < total_cost:
             print(f'Not enough gold {player.gold}/{total_cost}')
+            print('Press any key to continue')
+            input('> ')
 
         elif self.inventory.item_units[item.name] < quantity:
             print(f'Not enough inventory{self.inventory.item_units[item.name]}/{quantity}')
+            print('Press any key to continue')
+            input('> ')
 
         else:
             print(f'You have bought {quantity} x {item.name} for {total_cost} gold')
@@ -69,7 +73,7 @@ class Shop:
                             while not valid_choice2:
                                 try:
                                     self.player.inventory.display_player_inventory()
-                                    print('If you want to equip an armor piece, press 1\n')
+                                    print('\nIf you want to equip an armor piece, press 1\n')
                                     print('If you want to sell an item, press 2\n')
                                     print('If you want to return to the shop, press 0\n')
                                     print('Currently equipped items:\n')
