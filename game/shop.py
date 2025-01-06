@@ -102,6 +102,9 @@ class Shop:
 
                                                         valid_choice3 = True
 
+                                                    else:
+                                                        print('Please enter a valid input')
+
                                                 else:
                                                     print('Press any key to continue')
                                                     input('> ')
@@ -112,7 +115,42 @@ class Shop:
 
                                     # to sell items
                                     elif inventory_choice == 2:
-                                        pass
+                                        valid_choice4 = False
+                                        while not valid_choice4:
+                                            try:
+                                                print('What do you want to sell?\n')
+                                                print('To return to inventory, press 0\n')
+                                                self.player.display_player_inventory()
+                                                sell_choice = int(input('> '))
+                                                sell_item = 0
+
+                                                if sell_choice in range(1, len(self.player.inventory.items) + len(self.player.inventory.armor) + 1):
+                                                    if sell_choice in range(1, len(self.player.inventory.items)):
+                                                        sell_item = self.player.inventory.items[sell_choice - 1]
+                                                    elif sell_choice in range(len(self.player.inventory.items), len(self.player.inventory.items) + len(self.player.inventory.armor) + 1):
+                                                        sell_item = self.player.inventory.armor[sell_choice - len(self.player.inventory.items) - 1]
+                                                    sell_price = sell_item.cost - (sell_item.cost * 0.25)
+                                                    print(f'You will be selling the item for less than its worth\n'
+                                                          f'Are you sure you want to sell {sell_item.name} for {sell_price}?\n'
+                                                          f'Press y to confirm or n to return to your inventory\n')
+
+                                                    # validation for sell_confirmation
+                                                    while True:
+                                                        sell_confirmation = input('> ').lower()
+                                                        if sell_confirmation == 'y' or sell_confirmation == 'n':
+                                                            break
+                                                        else:
+                                                            print('Please enter valid input')
+
+                                                    if sell_confirmation == 'y':
+                                                        pass
+
+
+
+
+
+                                            except ValueError:
+                                                print("Please enter valid input")
 
                                     elif inventory_choice == 0:
                                         valid_choice2 = True
